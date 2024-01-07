@@ -8,7 +8,7 @@ pipeline {
     }
 
     parameters {
-        booleanParam(defaultValue: false, description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
+        booleanParam(defaultValue: isDeploymentNecessary(), description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
     }
 
     options {
@@ -50,16 +50,21 @@ pipeline {
 
         success {
             script {
-                if (params.DEPLOY_ENABLED == true) {
-                    archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar', followSymlinks: false
-                    build(
-                           job: 'pipeline-deploy',
-                           parameters: [booleanParam(name: 'ARE_YOU_SURE', value: "true")],
-                           wait: false,
-                           propagate: false
-                    )
-                    echo "pipeline-deploy 실행"
-                }
+                  if (params.DEPLOY_ENABLED == true) {
+                     archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar', followSymlinks: false
+                     build(
+                             job: 'pipeline-deploy',
+                             parameters: [booleanParam(name: 'ARE_YOU_SURE', value: "true")],
+                             wait: false,
+                             propagate: false
+                      )
+                  }
+                  if (isPr()) {
+                      echo "pipeline-deploy 실행"
+                      if (env.CHANGE_ID) {
+                        pullRequest.comment('This PR invoked pipeline-deploy..')
+                      }
+                  }
             }
         }
     }
@@ -72,6 +77,10 @@ def email_content() {
 ${DEFAULT_CONTENT}
 
 '''
+}
+
+def isDeploymentNecessary() {
+  return isMainOrDevelop() || (env.GITHUB_COMMENT ?: "").contains("deploy this")
 }
 
 def email_subject() {
