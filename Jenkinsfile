@@ -8,7 +8,7 @@ pipeline {
     }
 
     parameters {
-        booleanParam(defaultValue: true, description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
+        booleanParam(defaultValue: isDeploymentNecessary(), description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
     }
 
     options {
@@ -79,14 +79,32 @@ ${DEFAULT_CONTENT}
 '''
 }
 
-def isDeploymentNecessary() {
-  return isMainOrDevelop() || (env.GITHUB_COMMENT ?: "").contains("deploy this")
-}
-
 def email_subject() {
     return '빌드통지!! - ${DEFAULT_SUBJECT}'
 }
 
 def custom_msg(status) {
     return " $status: Job [${env.JOB_NAME}] Logs path: ${env.BUILD_URL}/consoleText"
+}
+
+
+
+def isSonarQubeNecessary() {
+    return isMainOrDevelop()
+}
+
+def isDeploymentNecessary() {
+  return isMainOrDevelop() || (env.GITHUB_COMMENT ?: "").contains("deploy this")
+}
+
+def isNotificationNecessary() {
+    return !isPr()
+}
+
+def isMainOrDevelop() {
+    return (env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "main")
+}
+
+def isPr() {
+    return env.BRANCH_NAME.startsWith("PR-")
 }
