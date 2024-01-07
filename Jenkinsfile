@@ -8,7 +8,7 @@ pipeline {
     }
 
     parameters {
-        booleanParam(defaultValue: isDeploymentNecessary(), description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
+        booleanParam(defaultValue: true, description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
     }
 
     options {
