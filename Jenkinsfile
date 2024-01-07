@@ -17,6 +17,10 @@ pipeline {
         // 디폴트 checkout skip 설정 제거
     }
 
+    triggers {
+        issueCommentTrigger('.*(test this|build this|deploy this).*')
+    }
+
     // stages > stage > steps 순으로 구성
     stages {
         stage('Build') {
