@@ -43,8 +43,8 @@ pipeline {
             jacoco sourcePattern: '**/src/main/kotlin'
             script {
                 mineRepository()
-                emailext attachLog: true, body: email_content(), subject: email_subject(), to: 'smathj007@gmail.com'
-                slackSend(channel: "#jenkins", message: "${custom_msg(currentBuild.currentResult)}")
+                // emailext attachLog: true, body: email_content(), subject: email_subject(), to: 'smathj007@gmail.com'
+                // slackSend(channel: "#jenkins", message: "${custom_msg(currentBuild.currentResult)}")
             }
         }
 
