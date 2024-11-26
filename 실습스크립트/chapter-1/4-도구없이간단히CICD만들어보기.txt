@@ -6,6 +6,8 @@
     cd ~
     docker exec -it cicd bash
     git clone https://github.com/본인계정명/fastcampus-jenkins.git
+    git clone https://github.com/smathj/fastcampus-jenkins.git
+
     cd fastcampus-jenkins
     ls -al
     // detached head 상태로 만듬

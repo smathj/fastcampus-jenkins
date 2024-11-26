@@ -3,6 +3,7 @@
 
   - Git 소스 URL 지정
     - https://github.com/[포크한 계정]/fastcampus-jenkins.git
+      https://github.com/smathj/fastcampus-jenkins.git
 
   - Git Branch 지정
     - origin/main

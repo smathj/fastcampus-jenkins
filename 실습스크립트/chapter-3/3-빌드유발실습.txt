@@ -41,5 +41,7 @@
   - 계정 > 설정 으로 이동 하여 API Token 발급
     - http://localhost:8080/user/admin/configure
     - Add new token
+
   - curl --user admin:토큰 "http://localhost:8080/job/practice1/build?token=build" 호출
+    curl --user admin:112db393dc5ec6bc3855dbb2900182a49e "http://localhost:8080/job/practice1/build?token=build"
   - 빌드 실행 확인

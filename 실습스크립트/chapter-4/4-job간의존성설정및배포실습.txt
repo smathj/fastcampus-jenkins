@@ -8,7 +8,7 @@
 * practice1-build 에서 SSH 전송 제거 및 practice1-deploy 연결
     - practice1-build > 빌드 구성 > 쉘 수정
       # 빌드 결과를 ${WORKSPACE}/deploy 로 복제 shell 추가
-      mkdir deploy
+      mkdir deploy | true
       cp projects/spring-app/build/libs/*-SNAPSHOT.jar deploy/
     - 빌드후 조치 > Build other projects 추가
       Projects to build : practice1-deploy
@@ -18,6 +18,7 @@
       - Job > 빌드후 조치 > Send build artifact over SSH 추가
         - Name: server_1
         - Source files: ${JENKINS_HOME}/workspace/practice1-build/projects/spring-app/deploy/*-SNAPSHOT.jar
+        ✨ ${JENKINS_HOME}/workspace/practice1-build/deploy/*-SNAPSHOT.jar
         - Flatten file 선택
 
 * 위 방식의 문제점

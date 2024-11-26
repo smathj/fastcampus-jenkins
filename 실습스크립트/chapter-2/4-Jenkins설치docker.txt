@@ -40,13 +40,36 @@
                   --user root \
                   jenkins/jenkins:lts-jdk17
 
+✨윈도우인 경우
+- JENKINS_HOME 환경변수 하나 생성
+=> JENKINS_HOME = C:\Users\USER\Desktop\jenkins
+
+- 파워쉘에서 확인
+=> echo $env:JENKINS_HOME
+
+- 도커 소켓위치가 실제로 윈도우에는 없지만 도커 가상머신 내에서 알아서 바꿔줌 (도커 인 도커)
+1. 절대경로
+docker run -d --name fast_jenkins --hostname=jenkins --restart=on-failure -e TZ=Asia/Seoul -p 8080:8080 -p 50000:50000 -v C:\Users\USER\Desktop\jenkins\practice\key:/key -v C:\Users\USER\Desktop\jenkins\.jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --network practice --user root jenkins/jenkins:lts-jdk17
+
+2. 환경변수 이용한 경로
+docker run -d --name fast_jenkins --hostname=jenkins --restart=on-failure -e TZ=Asia/Seoul -p 8080:8080 -p 50000:50000 -v $env:JENKINS_HOME\practice\key:/key -v $env:JENKINS_HOME\.jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --network practice --user root jenkins/jenkins:lts-jdk17
+
+
   - jenkins docker container 내부에 docker 설치
 
     docker exec --user root  -it jenkins apt-get update
     docker exec --user root  -it jenkins apt-get install -y docker.io
 
+    ✨ 내꺼의 경우 컨테이너 이름 fast_jenkins
+    docker exec --user root  -it fast_jenkins apt-get update
+    docker exec --user root  -it fast_jenkins apt-get install -y docker.io
+    docker exec --user root  -it fast_jenkins docker ps -a
+
   - 지금까지 설정한 것을 향후에도 재사용 가능하도록 jenkins image 로 커밋
     docker commit jenkins jenkins/jenkins:my-version
+
+    ✨ 내꺼의 경우 컨테이너 이름 fast_jenkins 로 커밋
+    docker commit fast_jenkins smathj/fast_jenkins:1.0
 
   - my-version 으로 jenkins docker container 재시작
     docker rm -f jenkins
@@ -60,4 +83,31 @@
                   --network practice \
                   --user root \
                   jenkins/jenkins:my-version
+
+    docker run -d --name my_fast_jenkins --hostname=jenkins \
+                  --restart=on-failure \
+                  -e TZ=Asia/Seoul \
+                  -p 8080:8080 -p 50000:50000 \
+                  -v ${HOME}/practice/key:/key \
+                  -v ${HOME}/.jenkins:/var/jenkins_home  \
+                  -v /var/run/docker.sock:/var/run/docker.sock \
+                  --network practice \
+                  --user root \
+                  smathj/fast_jenkins:1.0
+
+    ✨ 내꺼의 경우
+    docker rm -f fast_jenkins
+    docker run -d --name fast_jenkins --hostname=jenkins --restart=on-failure -e TZ=Asia/Seoul -p 8080:8080 -p 50000:50000 -v $env:JENKINS_HOME\practice\key:/key -v $env:JENKINS_HOME\.jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --network practice --user root smathj/fast_jenkins:1.0
+
+
+    docker run -d --name fast_jenkins --hostname=jenkins `
+                  --restart=on-failure `
+                  -e TZ=Asia/Seoul `
+                  -p 8080:8080 -p 50000:50000 `
+                  -v $env:JENKINS_HOME\practice/key:/key `
+                  -v $env:JENKINS_HOME\.jenkins:/var/jenkins_home  `
+                  -v /var/run/docker.sock:/var/run/docker.sock `
+                  --network practice `
+                  --user root `
+                  smathj/fast_jenkins:1.0
 

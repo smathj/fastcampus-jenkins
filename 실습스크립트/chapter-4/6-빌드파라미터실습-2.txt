@@ -43,7 +43,7 @@
     - 빌드후 조치 > Build other projects 제거
     - 빌드후 조치 > Trigger parameterized build on other projects 추가
       - Projects to build : practice1-deploy
-      - Add Parameter > Predefined parameters
+      - Add Parameter > Predefined parameters (미리정의된 매게변수)
         ARE_YOU_SURE=${INCLUDE_DEPLOY}
         입력
 

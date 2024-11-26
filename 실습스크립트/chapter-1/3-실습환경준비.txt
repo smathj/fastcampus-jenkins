@@ -29,6 +29,14 @@
          --network=practice \
          lscr.io/linuxserver/openssh-server:latest
 
+
+    ✨윈도우 인경우....
+    docker run -d --rm --name=server_1 --hostname=server_1 -v ./key:/key -e PUBLIC_KEY_FILE=/key/public.key -e SUDO_ACCESS=true -e USER_NAME=user --network=practice lscr.io/linuxserver/openssh-server:latest
+    docker run -d --rm --name=server_2 --hostname=server_2 -v ./key:/key -e PUBLIC_KEY_FILE=/key/public.key -e SUDO_ACCESS=true -e USER_NAME=user --network=practice lscr.io/linuxserver/openssh-server:latest
+
+
+
+
 * server_1 / server_2 에 openjdk 설치
 
     docker exec server_1 apk add --update openjdk17 python3
@@ -64,6 +72,9 @@ docker run -d --name haproxy --restart always \
          -v ~/practice/haproxy:/usr/local/etc/haproxy \
          haproxy
 
+✨ 윈도우 경우
+docker run -d --name haproxy --restart always --network practice -p 8081:8080 -v C:\Users\USER\Desktop\jenkins\practice\haproxy:/usr/local/etc/haproxy haproxy
+
 - 확인 방법
   docker exec -it server_1 bash
   touch health
@@ -77,6 +88,9 @@ docker run -d --rm --name=cicd \
      --hostname=cicd \
      --network=practice \
      gradle:7.6.1-jdk17 sleep 9999999999
+
+✨ 윈도우 경우
+docker run -d --rm --name=cicd -v C:\Users\USER\Desktop\jenkins\practice\key/:/key --hostname=cicd --network=practice gradle:7.6.1-jdk17 sleep 9999999999
 
 docker exec cicd apt-get update
 docker exec cicd apt-get install -y vim

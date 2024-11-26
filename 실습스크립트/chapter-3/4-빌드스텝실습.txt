@@ -19,9 +19,13 @@
 * 빌드 스텝 > Execute shell 을 추가하여 ssh 로 파일 전송
 
   chmod 400 /key/private.key
-  ssh -i /key/private.key -P 2222 \
+  scp -i /key/private.key -P 2222 \
        ${WORKSPACE}/projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar \
        user@server_1:/config/
+
+  ✨ 위의 ssh 를 scp 로 수정
+  scp -i /key/private.key -P 2222 /var/jenkins_home/workspace/projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar user@server_1:/config/
+  scp -i /key/private.key -P 2222 /var/jenkins_home/workspace/practice1/projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar user@server_1:/config/
 
   - 만약 server_1 이 안 떠 있다면 다음 docker 명령을 PC 에서 실행후 다시 빌드 진행
 
@@ -35,6 +39,23 @@
        --hostname=server_1 \
        --network=practice \
        lscr.io/linuxserver/openssh-server:latest
+
+
+✨ 윈도우인 경우
+  // -v ~/practice/key:/key `
+  docker run -d --name=server_1 `
+       -e PUBLIC_KEY_FILE=/key/public.key `
+       -p 12222:2222 -p 18080:8080 `
+       -v /var/run/docker.sock:/var/run/docker.sock  `
+       -v $env:JENKINS_HOME\practice\key:/key `
+       -e SUDO_ACCESS=true `
+       -e USER_NAME=user  `
+       --hostname=server_1 `
+       --network=practice `
+       lscr.io/linuxserver/openssh-server:latest
+
+
+  docker run -d --name=server_1 --hostname=server_1 -v $env:JENKINS_HOME\practice\key:/key -e PUBLIC_KEY_FILE=/key/public.key -e SUDO_ACCESS=true -e USER_NAME=user --network=practice lscr.io/linuxserver/openssh-server:latest
 
 * 빌드 스텝 > Execute shell 을 추가하여 userContent 로 파일 copy
 

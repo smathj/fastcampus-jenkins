@@ -16,6 +16,7 @@
     sonarqube:lts-community
 
 * SonarQube 프로젝트 및 접근 키 생성
+   admin / admin 이 기본 계정
   - 프로젝트 생성
     - http://localhost:9000/projects
     - Create Project > Manually
@@ -26,7 +27,7 @@
     - Name : access_key
     - Type : User Token
     - Generate 버튼클릭 및 생성된 접근키 기억
-
+    squ_a4b898ad8b35df52311505d4eca6a4d17f47c195
   - WebHook 설치
     - http://localhost:9000/admin/webhooks
     - Name: Jenkins

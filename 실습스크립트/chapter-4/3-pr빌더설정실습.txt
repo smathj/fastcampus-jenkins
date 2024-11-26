@@ -1,5 +1,7 @@
 * Github Pull Request builder Plugin 설치
 
+✨ 현재는 레거시가 되었고, 멀티브랜치 기능이 이를 대체함
+
 * Github Pull Request builder Global 설정
   - jenkins 관리 > System > Github Pull Request Builder
   - Github Server API URL : https://api.github.com
