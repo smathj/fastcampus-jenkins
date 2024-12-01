@@ -29,7 +29,7 @@
 * GitHub hook trigger for GITScm polling 설정
   - practice1 > 구성 > 빌드 유발 > GitHub hook trigger for GITScm polling 체크
   - 저장
-
+✨
 * Github 에 webhook 등록
   - Jenkins Github 설정에 Public DNS Hook 등록
     - Jekins 관리 > System > Jenkins Location
