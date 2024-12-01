@@ -11,6 +11,7 @@
   - Github Repo 에 변경 커밋 추가
   - 빌드 수행 확인
 
+✨
 * GitHub hook trigger for GITScm polling 설정
   - Github Developer Token 발급
     - https://github.com/settings/tokens
