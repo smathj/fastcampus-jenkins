@@ -26,11 +26,14 @@
   ✨ 위의 ssh 를 scp 로 수정
   scp -i /key/private.key -P 2222 /var/jenkins_home/workspace/projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar user@server_1:/config/
   scp -i /key/private.key -P 2222 /var/jenkins_home/workspace/practice1/projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar user@server_1:/config/
+  scp -i /key/private.key -P 2222 /1.txt user@server_1:/config/
+
 
   - 만약 server_1 이 안 떠 있다면 다음 docker 명령을 PC 에서 실행후 다시 빌드 진행
 
   docker run -d --name=server_1 \
        -e PUBLIC_KEY_FILE=/key/public.key \
+       -e TZ=Asia/Seoul \
        -p 12222:2222 -p 18080:8080 \
        -v /var/run/docker.sock:/var/run/docker.sock  \
        -v ~/practice/key:/key \
