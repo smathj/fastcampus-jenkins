@@ -1,3 +1,4 @@
+✨ 실패했을때 이메일이 전송
 * E-mail  Notification 설정
   - google 개인 정보 설정으로 이동
     https://myaccount.google.com/security?hl=ko
@@ -15,6 +16,7 @@
     - Recipients 에 이메일 수신자 추가
   - Job 빌드후 이메일 수신 확인
 
+✨ 실패뿐만 아니라 성공했을때도 이메일을 보내기위함
 * Extended E-mail Notification 설정
   - Jenkins 관리 > System > Extended E-mail Notification 로  이동
     - SMTP 서버 : smtp.gmail.com

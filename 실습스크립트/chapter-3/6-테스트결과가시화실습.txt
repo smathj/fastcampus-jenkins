@@ -5,6 +5,7 @@
   - 빌드후 테스트 결과 확인
 
 * 테스트 커버리지 가시화 추가
+ ✨ deprecate
   - Jacoco 플러그인 추가
   - github 에 가서 projects/spring-app/build.gradle 파일을 수정하여
     // jacoco 라는 부분을 uncomment
