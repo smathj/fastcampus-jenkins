@@ -26,9 +26,14 @@
     - URL 을 브라우저에서 입력하여 Jenkins 접근 확인
       - Visit Site 클릭
 
+
+✨ 꼭 체크해야함 !!!
 * GitHub hook trigger for GITScm polling 설정
   - practice1 > 구성 > 빌드 유발 > GitHub hook trigger for GITScm polling 체크
   - 저장
+
+
+
 ✨
 * Github 에 webhook 등록
   - Jenkins Github 설정에 Public DNS Hook 등록
