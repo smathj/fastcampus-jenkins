@@ -1,4 +1,2 @@
 # fastcampus-jenkins
-111111111
-22222222222
-3333333333333
+rrrrrrrrrrrrrr
