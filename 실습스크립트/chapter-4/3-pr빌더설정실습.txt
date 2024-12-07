@@ -15,7 +15,6 @@
   - Auto-manage webhooks 클릭
   - Admin list 에 본인 github ID 입력
 
-pr ...rrr2222
 * Jenkins PR builder 용 Job 설정
   - Dashboard > 새로운 Item
     * Item Name : practice1-pr 입력
