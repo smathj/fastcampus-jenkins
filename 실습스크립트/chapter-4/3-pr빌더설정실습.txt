@@ -28,7 +28,7 @@ pr ...
     - 참고로 ${sha1}는 현재 PR이 머지대상에 머지되었을때를 가정한 커밋 / ${ghprbActualCommit} 는 현재 PR 커밋
   - 빌드 유발
     - Github Pull Request Builder 선택
-
+   asd
 * Github repo 에 WebHook 설정
   - https://github.com/[각자의 계정]/fastcampus-jenkins/settings/hooks 으로 이동
   - /ghprbhook/ 로 끝나는 URL 을 가진 Web Hook 이 등록되어 있는지 확인
