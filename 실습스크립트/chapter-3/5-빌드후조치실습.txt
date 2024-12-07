@@ -3,6 +3,7 @@
   - Files to archive : **/build/libs/*-SNAPSHOT.jar
   - 빌드 정보 화면으로 이동하여 archive 확인
 
+🪴실무 가능
 * 빌드후 조치 > Send build artifact over SSH 추가
   - Publish Over SSH 플러그인 추가
   - Jenkins 관리 > System > Publish Over SSH
