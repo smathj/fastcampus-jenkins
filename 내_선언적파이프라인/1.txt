@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        commitMessage = sh(script: "git log -1 --pretty=%B", returnStdout: true).trim()
+    }
+
+    triggers {
+        githubPush()
+    }
+
+    stages {
+        stage("ENV") {
+            steps {
+                echo "ENV..."
+                sh "printenv"
+            }
+        }
+        stage("EMAIL") {
+            steps {
+                script {
+                    emailext attachLog: true, body: "선언적 파이프라인 스크립트에서 보낸다 커밋: ${commitMessage}", subject: 'ㅎㅇ', to: 'smathj007@gmail.com'
+                }
+            }
+        }
+        stage("Build") {
+            steps {
+                echo "Building..."
+                git branch: 'main', credentialsId: 'e87b9844-a5c4-4f68-b825-29e247faa1fd', url: 'https://github.com/smathj/fastcampus-jenkins'
+                sh "ls -al"
+                dir('projects/spring-app') {
+                    sh "pwd"
+                    sh "./gradlew build"
+                    sh "ls build/libs"
+                }
+            }
+        }
+
+        stage("Test") {
+            steps {
+                echo "Testing..."
+                echo "최근 커밋 메시지: ${commitMessage}"
+                sh "docker ps"
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                echo "Deploying..."
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'server_1', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''whoami
+                ls -al
+                pwd''', execTimeout: 120000, flatten: true, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'projects/spring-app/build/libs/demo-0.0.1-SNAPSHOT.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+
+
+            }
+        }
+    }
+}
