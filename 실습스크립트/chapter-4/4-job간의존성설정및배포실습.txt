@@ -5,6 +5,7 @@
     - practice1 > Rename
       - New Name : practice1-build
 
+[빌드]
 * practice1-build 에서 SSH 전송 제거 및 practice1-deploy 연결
     - practice1-build > 빌드 구성 > 쉘 수정
       # 빌드 결과를 ${WORKSPACE}/deploy 로 복제 shell 추가
@@ -13,6 +14,7 @@
     - 빌드후 조치 > Build other projects 추가
       Projects to build : practice1-deploy
 
+[배포]
 * deploy 전용 job에 신규 SSH 전송 deploy 추가
     - practice1-deploy FreeStyle job 생성
       - Job > 빌드후 조치 > Send build artifact over SSH 추가

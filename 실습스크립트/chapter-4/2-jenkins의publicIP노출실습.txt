@@ -1,3 +1,4 @@
+🪴포트 포워딩으로 해결
 * ngrok 가입 및 auth 토큰 발급
   - https://ngrok.com/ 이동후 가입
   - https://dashboard.ngrok.com/get-started/your-authtoken 로 이동하여 auth token 복사
