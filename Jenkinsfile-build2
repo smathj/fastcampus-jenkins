@@ -26,6 +26,7 @@ pipeline {
                 sh "printenv"
             }
         }
+/*
         stage('Checkout') {
             steps {
                 checkout scmGit(
@@ -38,6 +39,7 @@ pipeline {
                 )
             }
         }
+*/
 
         stage('Build') {
             steps {
