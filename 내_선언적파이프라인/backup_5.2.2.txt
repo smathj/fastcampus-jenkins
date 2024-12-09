@@ -1,0 +1,72 @@
+properties([
+    parameters([
+        string(defaultValue: 'main', description: '배포할 브랜치를 입력하세요.', name: 'BRANCH'),
+        booleanParam(defaultValue: true, description: '배포 포함 여부', name: 'DEPLOY_ENABLED')
+    ])
+])
+
+pipeline {
+    agent any
+
+    triggers {
+        githubPush()
+    }
+
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')
+        githubProjectProperty(displayName: '', projectUrlStr: 'https://github.com/smathj/fastcampus-jenkins')
+    }
+
+    stages {
+
+        stage('Prepare') {
+            steps {
+                echo "Selected branch: ${params.BRANCH}"
+                echo "Deploy enabled: ${params.DEPLOY_ENABLED}"
+                sh "printenv"
+            }
+        }
+        stage('Checkout') {
+            steps {
+                checkout scmGit(
+                    branches: [[name: "${params.BRANCH}"]],
+                    userRemoteConfigs: [[
+                        credentialsId: 'github-ssh',
+                        url: 'git@github.com:smathj/fastcampus-jenkins.git'
+                    ]],
+                    extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'projects/spring-app']]]]
+                )
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir("projects/spring-app") {
+                    withGradle {
+                        sh "./gradlew build"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            mineRepository()
+        }
+
+        success {
+            archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar'
+            script {
+                if (params.DEPLOY_ENABLED == true) {
+                    build(
+                        job: 'pipeline-deploy',
+                        parameters: [booleanParam(name: 'ARE_YOU_SURE', value: "true")],
+                        wait: false,
+                        propagate: false
+                    )
+                }
+            }
+        }
+    }
+}
