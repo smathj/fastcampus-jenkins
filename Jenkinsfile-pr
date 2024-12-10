@@ -16,13 +16,13 @@ pipeline {
 
     // stages > stage > steps 순으로 구성
     stages {
-        
+
         stage('Prepare') {
             steps {
                 // 어떤 환경변수가 주입되는지 확인
                 sh "printenv"
                 script {
-                 
+
                     properties([
                             // https://www.jenkins.io/doc/pipeline/steps/params/pipelinetriggers/
                             pipelineTriggers([
@@ -34,7 +34,7 @@ pipeline {
                                             permitAll     : false,
                                             useGitHubHooks: true,
                                             triggerPhrase : '.*(test this|build this|deploy this).*',
-                                            gitHubAuthId  : 'e351df9c-0f32-459f-93c1-6e06c63a5e58', // Jenkins 설정 > System >  GitHub Pull Request Builder > Auth ID 에서 확인 가능
+                                            gitHubAuthId  : '1743bf29-24cf-4831-b710-e798d761ac97', // Jenkins 설정 > System >  GitHub Pull Request Builder > Auth ID 에서 확인 가능
                                             extensions    : [
                                                     [
                                                             $class             : 'GhprbSimpleStatus',
@@ -44,7 +44,7 @@ pipeline {
                                             ]
                                     ]
                             ])
-                    ])   
+                    ])
                 }
             }
         }
