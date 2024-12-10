@@ -67,6 +67,7 @@ pipeline {
     post {
 
         success {
+            sh "echo ${env}"
             sh "echo ${env.ghprbCommentBody}"
             script {
                 if ((env.ghprbCommentBody ?: "").contains("deploy this")) {
