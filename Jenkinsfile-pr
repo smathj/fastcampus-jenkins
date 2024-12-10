@@ -69,9 +69,8 @@ pipeline {
         success {
             script {
 
-                env.ghprbCommentBody = "deploy job"
 
-                if ((env.ghprbCommentBody ?: "").contains("deploy this")) {
+                //if ((env.ghprbCommentBody ?: "").contains("deploy this")) {
                     archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar'
                     build(
                            job: 'pipeline-deploy',
@@ -79,7 +78,7 @@ pipeline {
                            wait: false,
                            propagate: false
                     )
-                }
+                //}
             }
         }
     }
