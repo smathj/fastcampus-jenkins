@@ -67,9 +67,9 @@ pipeline {
     post {
 
         success {
-            sh "echo ${env}"
-            sh "echo ${env.ghprbCommentBody}"
             script {
+                def prComment = env.ghprbCommentBody
+                echo "PR Comment : ${prComment}"
                 if ((env.ghprbCommentBody ?: "").contains("deploy this")) {
                     archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar'
                     build(
