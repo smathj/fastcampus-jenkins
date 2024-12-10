@@ -68,13 +68,8 @@ pipeline {
 
         success {
             script {
-                def prNumber = env.CHANGE_ID
-                def repoUrl = env.GIT_URL
-                def apiUrl = repoUrl.replace('github.com', 'api.github.com/repos') + '/pulls/' + prNumber
-                def response = httpRequest url: apiUrl, authentication: 'github-credentials'
-                def prInfo = readJSON text: response.content
-                echo "PR Title: ${prInfo.title}"
-                echo "PR Body: ${prInfo.body}"
+
+                env.ghprbCommentBody = "deploy job"
 
                 if ((env.ghprbCommentBody ?: "").contains("deploy this")) {
                     archiveArtifacts artifacts: 'projects/spring-app/build/libs/*-SNAPSHOT.jar'
